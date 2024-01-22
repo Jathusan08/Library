@@ -14,3 +14,89 @@ body {
   height: 100%;
   overscroll-behavior: none;
 }
+
+.container {
+  /* looked at online resouces to make sure my footer always stay at the bottom.*/
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #5868dc;
+}
+
+header {
+  height: 80px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  padding: 3px;
+
+  color: #fdfdfe;
+  font-family: fantasy;
+
+  background-color: #3946aa;
+}
+
+.main-container {
+  width: auto;
+  height: 100%;
+  /* display: flex; */
+}
+
+.button-section {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-section > .add-book-btn {
+  height: 35px;
+  width: 150px;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 20px;
+  background-color: #00b7dd;
+  color: #f4fbfd;
+}
+
+.main-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.main-section > .book-list-section {
+  height: 100%;
+  width: 65%;
+}
+
+.main-section > .pie-chart-section {
+  background-color: #8dc1fc;
+  height: 100%;
+  width: 35%;
+}
+
+footer h3,
+footer h3 a {
+  text-align: center;
+  background-color: #3946aa;
+  color: #fdfdfe;
+  font-size: 20px;
+  padding: 25px;
+}
+
+footer h3 a {
+  color: #fdfdfe;
+  background-color: #3946aa;
+}
+
+footer {
+  margin-top: auto;
+}
