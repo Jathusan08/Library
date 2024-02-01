@@ -61,8 +61,100 @@ h1 {
   border-radius: 20px;
   background-color: #00b7dd;
   color: #f4fbfd;
+  cursor: pointer;
+}
+dialog {
+  margin: 10% auto;
+  width: 80%;
+  height: 58%;
+  max-width: 520px;
+  max-height: 350px;
+  background-color: #fff;
+  padding: 34px;
+  border: 0;
+  border-radius: 5px;
+  background-color: #191919;
 }
 
+dialog > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(5px);
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+}
+
+.modal > h2 {
+  color: #fec853;
+  padding-bottom: 15px;
+}
+
+.title > label,
+.author > label,
+.pages > label,
+.unread,
+.reading,
+.completed,
+.customValue {
+  color: #f7f7f7;
+}
+
+input {
+  background-color: #212121;
+  border: none;
+  color: #acacac;
+}
+
+input:focus {
+  outline: 2px solid #fec853;
+}
+
+legend {
+  color: #f7f7f7;
+}
+
+input[type="radio"] {
+  accent-color: #fec853;
+}
+
+fieldset {
+  width: 470px;
+}
+
+.error {
+  font-size: 0.6rem;
+  font-weight: lighter;
+}
+
+.buttons-form {
+  text-align: center;
+}
+
+.buttons-form > .submit-button {
+  background-color: #fec853;
+  border: none;
+  color: #f7f7f7;
+  font-weight: bolder;
+  width: 75px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.buttons-form > .cancel-button {
+  color: #dcdcdc;
+  font-weight: bolder;
+  width: 75px;
+  height: 25px;
+  background-color: #191919;
+  border: none;
+  border-color: #fec853;
+  cursor: pointer;
+}
 .main-section {
   width: 100%;
   height: 100%;
