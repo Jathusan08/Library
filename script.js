@@ -28,43 +28,48 @@ const showorHideCustomRadioButton = (boolean1, boolean2) => {
   customValueInput.disabled = boolean2;
 };
 
-showorHideCustomRadioButton(true);
+showorHideCustomRadioButton(true, true);
+
+const userInputTextValidation = (inputType, errorLabel, errorMessage) => {
+  if (inputType.value === "" || inputType.value.trim() === "") {
+    errorLabel.textContent = errorMessage;
+    errorLabel.style.color = "red";
+    return false;
+  } else {
+    errorLabel.textContent = "✓";
+    errorLabel.style.color = "green";
+    return true;
+  }
+};
 
 titleInput.addEventListener("input", () => {
-  if (titleInput.value === "" || titleInput.value.trim() === "") {
-    titleError.textContent = "Book title required";
-    titleError.style.color = "red";
-  } else {
-    titleError.textContent = "✓";
-    titleError.style.color = "green";
-  }
+  userInputTextValidation(titleInput, titleError, "Book title required");
 });
 
 authorInput.addEventListener("input", () => {
-  if (authorInput.value === "" || authorInput.value.trim() === "") {
-    authorError.textContent = "Author name required";
-    authorError.style.color = "red";
-  } else {
-    authorError.textContent = "✓";
-    authorError.style.color = "green";
-  }
+  userInputTextValidation(authorInput, authorError, "Author name required");
 });
 
-pagesInput.addEventListener("input", (event) => {
+const userInputBookNumberPageValidation = () => {
   if (pagesInput.value === "") {
     pageNumError.textContent = "Page number required";
     pageNumError.style.color = "red";
     showorHideCustomRadioButton(true, true);
+    return false;
   } else if (pagesInput.value === "0") {
     pageNumError.textContent = "Page number cannot be equal to 0";
     pageNumError.style.color = "red";
     showorHideCustomRadioButton(true, true);
+    return false;
   } else {
     pageNumError.textContent = "✓";
     pageNumError.style.color = "green";
     showorHideCustomRadioButton(false, true);
+    return true;
   }
-});
+};
+
+pagesInput.addEventListener("input", userInputBookNumberPageValidation);
 
 radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener("change", function () {
@@ -85,10 +90,11 @@ radioButtons.forEach(function (radioButton) {
   });
 });
 
-customValueInput.addEventListener("input", () => {
+const userInputPageReadValidation = () => {
   if (customValueInput.value === "") {
     userInputPageNumberError.textContent = "Number of pages read required";
     userInputPageNumberError.style.color = "red";
+    return false;
   } else if (
     customValueInput.value === "0" ||
     Number(customValueInput.value) < 0
@@ -96,13 +102,18 @@ customValueInput.addEventListener("input", () => {
     userInputPageNumberError.textContent =
       "Number of pages read cannot be equal to 0 or less than 0";
     userInputPageNumberError.style.color = "red";
+    return false;
   } else if (Number(customValueInput.value) > Number(pagesInput.value)) {
     userInputPageNumberError.textContent =
       "Number of pages read cannot be greater than total pages of the book";
     userInputPageNumberError.style.fontSize = "0.5rem";
     userInputPageNumberError.style.color = "red";
+    return false;
   } else if (Number(customValueInput.value) <= Number(pagesInput.value)) {
     userInputPageNumberError.textContent = "✓";
     userInputPageNumberError.style.color = "green";
+    return true;
   }
-});
+};
+
+customValueInput.addEventListener("input", userInputPageReadValidation);
