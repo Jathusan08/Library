@@ -19,6 +19,23 @@ const userInputPageNumberError = document.querySelector(
   ".pageNumberInput > .error"
 );
 
+const myLibrary = [];
+
+function Book(title, author, pages, status) {
+  // the constructor...
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.status = status;
+}
+
+function addBookToLibrary(newBook) {
+  myLibrary.push(
+    new Book(newBook.title, newBook.author, newBook.pages, newBook.status)
+  );
+  console.log("Book added to library");
+}
+
 addBookBtn.addEventListener("click", () => {
   modal.showModal();
 });
@@ -75,6 +92,7 @@ radioButtons.forEach(function (radioButton) {
   radioButton.addEventListener("change", function () {
     // Check if the radio button is checked
     if (radioButton.checked) {
+      console.log(radioButton.value);
       if (
         radioButton.value === "reading" ||
         radioButton.value === "unread" ||
@@ -117,3 +135,47 @@ const userInputPageReadValidation = () => {
 };
 
 customValueInput.addEventListener("input", userInputPageReadValidation);
+
+const clearValues = () => {
+  titleInput.value = "";
+  authorInput.value = "";
+  pagesInput.value = "";
+  customValueInput.value = "";
+  document.getElementById("unread").checked = true;
+  titleError.textContent = "";
+  authorError.textContent = "";
+  pageNumError.textContent = "";
+  userInputPageNumberError.textContent = "";
+};
+
+submitButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  const selectedRadioButton = document.querySelector(
+    'input[name="readingStatus"]:checked'
+  );
+
+  if (
+    userInputTextValidation(titleInput, titleError, "Book title required") &&
+    userInputTextValidation(authorInput, authorError, "Author name required") &&
+    userInputBookNumberPageValidation &&
+    (selectedRadioButton.value != "customValue" ||
+      (selectedRadioButton.value === "customValue" &&
+        userInputPageReadValidation()))
+  ) {
+    const newBook = {
+      title: titleInput.value,
+      author: authorInput.value,
+      pages: pagesInput.value,
+      status:
+        selectedRadioButton.value === "customValue"
+          ? customValueInput.value
+          : selectedRadioButton.value,
+    };
+    addBookToLibrary(newBook);
+    modal.close(newBook);
+    clearValues();
+  } else {
+    console.log("ERROR");
+    /// Show validation  or error messages
+  }
+});
