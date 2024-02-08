@@ -68,7 +68,9 @@ authorInput.addEventListener("input", () => {
 });
 
 const userInputBookNumberPageValidation = () => {
+  console.log(`page number: ${pagesInput.value === ""}`);
   if (pagesInput.value === "") {
+    console.log(`page number: ${pagesInput.value === ""}`);
     pageNumError.textContent = "Page number required";
     pageNumError.style.color = "red";
     showorHideCustomRadioButton(true, true);
@@ -79,6 +81,7 @@ const userInputBookNumberPageValidation = () => {
     showorHideCustomRadioButton(true, true);
     return false;
   } else {
+    console.log(typeof pagesInput.value);
     pageNumError.textContent = "✓";
     pageNumError.style.color = "green";
     showorHideCustomRadioButton(false, true);
@@ -146,6 +149,7 @@ const clearValues = () => {
   authorError.textContent = "";
   pageNumError.textContent = "";
   userInputPageNumberError.textContent = "";
+  showorHideCustomRadioButton(true, true);
 };
 
 submitButton.addEventListener("click", (event) => {
@@ -157,20 +161,20 @@ submitButton.addEventListener("click", (event) => {
   if (
     userInputTextValidation(titleInput, titleError, "Book title required") &&
     userInputTextValidation(authorInput, authorError, "Author name required") &&
-    userInputBookNumberPageValidation &&
+    userInputBookNumberPageValidation() &&
     (selectedRadioButton.value != "customValue" ||
       (selectedRadioButton.value === "customValue" &&
         userInputPageReadValidation()))
   ) {
-    const newBook = {
-      title: titleInput.value,
-      author: authorInput.value,
-      pages: pagesInput.value,
-      status:
-        selectedRadioButton.value === "customValue"
-          ? customValueInput.value
-          : selectedRadioButton.value,
-    };
+    const newBook = new Book(
+      titleInput.value,
+      authorInput.value,
+      pagesInput.value,
+      selectedRadioButton.value === "customValue"
+        ? customValueInput.value
+        : selectedRadioButton.value
+    );
+
     addBookToLibrary(newBook);
     modal.close(newBook);
     clearValues();
@@ -179,3 +183,18 @@ submitButton.addEventListener("click", (event) => {
     /// Show validation  or error messages
   }
 });
+
+const getStatusColor = (book) => {
+  let statusColor;
+
+  if (book.status === "unread") {
+    statusColor = "#ff0000";
+  } else if (book.status === "reading") {
+    statusColor = "#ffbf00";
+  } else if (book.status === "completed") {
+    statusColor = "#4caf50";
+  } else {
+    statusColor = "#ffffff";
+  }
+  return statusColor;
+};
