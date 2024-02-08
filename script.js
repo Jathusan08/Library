@@ -198,3 +198,27 @@ const getStatusColor = (book) => {
   }
   return statusColor;
 };
+
+const getPercentageColor = (book) => {
+  let color;
+  if (!Number.isNaN(Number(book.status))) {
+    const percentageRead = (Number(book.status) / Number(book.pages)) * 100;
+
+    if (percentageRead === 100) {
+      color = "#4caf50";
+    } else if (percentageRead >= 80 && percentageRead <= 99) {
+      color = "#5db761";
+    } else if (percentageRead >= 70 && percentageRead <= 79) {
+      color = "#ffbf00";
+    } else if (percentageRead >= 50 && percentageRead <= 69) {
+      color = "#ffc519";
+    } else if (percentageRead >= 25 && percentageRead <= 49) {
+      color = "#ff3232";
+    } else if (percentageRead >= 6 && percentageRead <= 24) {
+      color = "#ff1919";
+    } else if (percentageRead >= 0 && percentageRead <= 5) {
+      color = "#ff0000";
+    }
+    return color;
+  }
+};
