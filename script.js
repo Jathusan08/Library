@@ -177,6 +177,7 @@ submitButton.addEventListener("click", (event) => {
 
     addBookToLibrary(newBook);
     modal.close(newBook);
+    addBookToGridLayout(newBook);
     clearValues();
   } else {
     console.log("ERROR");
@@ -274,3 +275,76 @@ function updateProgressBar(progressBar, percentage, book) {
     centerY
   );
 }
+
+const addBookToGridLayout = (book) => {
+  // main container of grid
+  const viewBookContainer = document.querySelector(".book-list-section");
+
+  const grid = addNewElement("div", "grid");
+  viewBookContainer.appendChild(grid);
+
+  const gridLayout = addNewElement("div", "grid-layout");
+  grid.appendChild(gridLayout);
+
+  const statusContainer = addNewElement("div", "status-container");
+  gridLayout.appendChild(statusContainer);
+
+  const statusHeading = addNewElement("h3", "statusHeading");
+  statusHeading.textContent = "Status:";
+  statusContainer.appendChild(statusHeading);
+
+  const statusLayout = addNewElement("div", "status-layout");
+  statusContainer.appendChild(statusLayout);
+
+  // circular-progress bar
+  const progressBar = document.createElement("canvas");
+  progressBar.width = statusLayout.clientWidth;
+  progressBar.height = statusLayout.clientHeight;
+  statusLayout.appendChild(progressBar);
+  updateProgressBar(
+    progressBar,
+    Number(book.status) / Number(book.pages),
+    book
+  );
+
+  const bookInfoContainer = addNewElement("div", "bookInfo-container");
+  gridLayout.appendChild(bookInfoContainer);
+
+  const bookTitleLabel = addNewElement("div", "bookTitle-label");
+  bookTitleLabel.textContent = "Book Title: ";
+  bookInfoContainer.appendChild(bookTitleLabel);
+  const bookTitleResult = addNewElement("span", "bookTitle-result");
+  bookTitleResult.textContent = book.title;
+  bookTitleLabel.appendChild(bookTitleResult);
+
+  const AuthorNameLabel = addNewElement("div", "AuthorName-label");
+  AuthorNameLabel.textContent = "Book Title: ";
+  bookInfoContainer.appendChild(AuthorNameLabel);
+  const AuthorNameResult = addNewElement("span", "AuthorName-result");
+  AuthorNameResult.textContent = book.author;
+  AuthorNameLabel.appendChild(AuthorNameResult);
+
+  const TotalPageNumberLabel = addNewElement("div", "TotalPageNumber-label");
+  TotalPageNumberLabel.textContent = "Total Page: ";
+  bookInfoContainer.appendChild(TotalPageNumberLabel);
+  const TotalPageNumberResult = addNewElement("span", "TotalPageNumber-result");
+  TotalPageNumberResult.textContent = book.pages;
+  TotalPageNumberLabel.appendChild(TotalPageNumberResult);
+
+  const buttonLayout = addNewElement("div", "button-layout");
+  bookInfoContainer.appendChild(buttonLayout);
+
+  const editButton = addNewElement("button", "edit-btn");
+  buttonLayout.appendChild(editButton);
+  const editIcon = addNewElement("img", "editIcon-img");
+  editIcon.src = "https://img.icons8.com/ios/50/000000/create-new.png";
+  editIcon.alt = "Edit Icon";
+  editButton.appendChild(editIcon);
+
+  const deleteButton = addNewElement("button", "delete-btn");
+  buttonLayout.appendChild(deleteButton);
+  const deleteIcon = addNewElement("img", "deleteIcon-img");
+  deleteIcon.src = "https://img.icons8.com/ios/28/000000/trash--v1.png";
+  deleteIcon.alt = "Delete Icon";
+  deleteButton.appendChild(deleteIcon);
+};
