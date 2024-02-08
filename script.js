@@ -228,3 +228,49 @@ const addNewElement = (elementType, className) => {
   newElement.classList.add(className);
   return newElement;
 };
+
+function updateProgressBar(progressBar, percentage, book) {
+  const ctx = progressBar.getContext("2d");
+  const centerX = progressBar.width / 2;
+  const centerY = progressBar.height / 2;
+  const radius = progressBar.width / 2 - 5; // 5 is the border width
+
+  ctx.clearRect(0, 0, progressBar.width, progressBar.height);
+
+  // Draw border
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  ctx.strokeStyle = getStatusColor(book);
+  ctx.lineWidth = 8;
+  ctx.stroke();
+
+  // Draw progress
+  ctx.beginPath();
+  ctx.arc(
+    centerX,
+    centerY,
+    radius,
+    -0.5 * Math.PI,
+    2 * Math.PI * percentage - 0.5 * Math.PI
+  );
+  ctx.strokeStyle = getPercentageColor(book); // Change color as needed
+  ctx.lineWidth = 10;
+  ctx.stroke();
+
+  // Display percentage in the middle
+  ctx.fillStyle = !Number.isNaN(Number(book.status))
+    ? getPercentageColor(book)
+    : getStatusColor(book); // Change text color as needed
+  ctx.font = "20px Arial"; // Change font size and type as needed
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(
+    `${
+      !Number.isNaN(Number(book.status))
+        ? Math.round(percentage * 100) + "%"
+        : book.status.toUpperCase()
+    }`,
+    centerX,
+    centerY
+  );
+}
