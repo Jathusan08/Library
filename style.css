@@ -7,12 +7,15 @@
 html {
   overflow: hidden;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 body {
   overflow: auto;
   height: 100%;
   overscroll-behavior: none;
+  min-width: 1424px;
 }
 
 .container {
@@ -43,6 +46,8 @@ h1 {
   width: auto;
   height: 100%;
   /* display: flex; */
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .button-section {
@@ -163,6 +168,102 @@ fieldset {
 }
 
 .main-section > .book-list-section {
+  padding: 0.5rem;
+  width: auto;
+  display: grid;
+
+  grid-template-columns: 455px 455px 455px;
+
+  gap: 20px;
+}
+
+.grid {
+  background-color: #8dc1fc;
+  height: 275px;
+  width: auto;
+  border-radius: 25px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid > .grid-layout {
+  height: 80%;
+  width: 90%;
+  display: flex;
+}
+
+.status-container {
+  height: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-container > .statusHeading {
+  color: #0e1319;
+  font-family: Copperplate;
+}
+
+.status-container > .status-layout {
+  background-color: #46607e;
+  height: 70%;
+  width: 95%;
+  border-radius: 50%;
+}
+
+.bookInfo-container {
+  height: auto;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.bookTitle-label,
+.AuthorName-label,
+.TotalPageNumber-label {
+  color: #1c2632;
+  font-family: Copperplate;
+  background-color: #46607e;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.button-layout {
+  height: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  height: 45px;
+  width: 45px;
+  border: none;
+  border-radius: 50px;
+}
+
+.edit-btn {
+  background-color: #ffde07;
+}
+
+.editIcon-img,
+.deleteIcon-img {
+  width: 28px;
+  height: 28px;
+  border: none;
+  outline: none;
+}
+
+.delete-btn {
+  background-color: #ff0000;
 }
 
 footer h3,
