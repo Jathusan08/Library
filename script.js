@@ -222,3 +222,9 @@ const getPercentageColor = (book) => {
     return color;
   }
 };
+
+const addNewElement = (elementType, className) => {
+  const newElement = document.createElement(elementType);
+  newElement.classList.add(className);
+  return newElement;
+};
