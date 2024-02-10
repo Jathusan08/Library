@@ -19,7 +19,12 @@ const userInputPageNumberError = document.querySelector(
   ".pageNumberInput > .error"
 );
 
+// main container of grid
+const viewBookContainer = document.querySelector(".book-list-section");
+
 const myLibrary = [];
+
+console.log(myLibrary);
 
 function Book(title, author, pages, status) {
   // the constructor...
@@ -177,7 +182,7 @@ submitButton.addEventListener("click", (event) => {
 
     addBookToLibrary(newBook);
     modal.close(newBook);
-    addBookToGridLayout(newBook);
+    addBookToGridLayout(newBook, myLibrary.length - 1);
     clearValues();
   } else {
     console.log("ERROR");
@@ -276,10 +281,7 @@ function updateProgressBar(progressBar, percentage, book) {
   );
 }
 
-const addBookToGridLayout = (book) => {
-  // main container of grid
-  const viewBookContainer = document.querySelector(".book-list-section");
-
+const addBookToGridLayout = (book, index) => {
   const grid = addNewElement("div", "grid");
   viewBookContainer.appendChild(grid);
 
@@ -332,10 +334,13 @@ const addBookToGridLayout = (book) => {
   TotalPageNumberLabel.appendChild(TotalPageNumberResult);
 
   const buttonLayout = addNewElement("div", "button-layout");
+  buttonLayout.setAttribute("data-book-Index", `${index}`);
   bookInfoContainer.appendChild(buttonLayout);
 
   const editButton = addNewElement("button", "edit-btn");
+
   buttonLayout.appendChild(editButton);
+
   const editIcon = addNewElement("img", "editIcon-img");
   editIcon.src = "https://img.icons8.com/ios/50/000000/create-new.png";
   editIcon.alt = "Edit Icon";
@@ -347,4 +352,23 @@ const addBookToGridLayout = (book) => {
   deleteIcon.src = "https://img.icons8.com/ios/28/000000/trash--v1.png";
   deleteIcon.alt = "Delete Icon";
   deleteButton.appendChild(deleteIcon);
+  deleteButton.addEventListener("click", () => clickDeleteBtn(deleteButton));
+};
+
+const clickDeleteBtn = (deleteButton) => {
+  const parentNode = deleteButton.parentNode;
+  // Get the value of the "data-parent-attribute" attribute of the parent node
+  const indexToRemove = Number(parentNode.getAttribute("data-book-Index")); // index of item to remove
+  myLibrary.splice(indexToRemove, 1);
+  removeGrids();
+  for (let i = 0; i < myLibrary.length; i++) {
+    addBookToGridLayout(myLibrary[i], i);
+  }
+  // console.log("Parent Attribute Value:", parentAttribute);
+};
+
+const removeGrids = () => {
+  while (viewBookContainer.hasChildNodes()) {
+    viewBookContainer.removeChild(viewBookContainer.firstChild);
+  }
 };
