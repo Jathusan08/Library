@@ -59,8 +59,7 @@ h1 {
   gap: 15px;
 }
 
-.button-section > .add-book-btn,
-.button-section > .show-staticis-btn {
+.button-section > .add-book-btn {
   height: 35px;
   width: 150px;
   font-size: 1.25rem;
@@ -68,7 +67,6 @@ h1 {
   border-radius: 20px;
   background-color: #00b7dd;
   color: #f4fbfd;
-  cursor: pointer;
 }
 dialog {
   margin: 10% auto;
@@ -149,7 +147,6 @@ fieldset {
   font-weight: bolder;
   width: 75px;
   height: 25px;
-  cursor: pointer;
 }
 
 .buttons-form > .cancel-button {
@@ -160,7 +157,6 @@ fieldset {
   background-color: #191919;
   border: none;
   border-color: #fec853;
-  cursor: pointer;
 }
 .main-section {
   width: 100%;
@@ -282,4 +278,8 @@ footer h3 a {
 
 footer {
   margin-top: auto;
+}
+
+button {
+  cursor: pointer;
 }
