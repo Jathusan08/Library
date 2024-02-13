@@ -1,7 +1,7 @@
 //  MOdal
 const modal = document.querySelector(".modal");
 const addBookBtn = document.querySelector(".add-book-btn");
-const closeButton = document.querySelector(".close-button");
+const closeButton = document.querySelector(".cancel-button");
 const submitButton = document.querySelector(".submit-button");
 
 // user input fields
@@ -24,6 +24,9 @@ const viewBookContainer = document.querySelector(".book-list-section");
 
 const myLibrary = [];
 
+// -1 to add new book or more than -1 to update book
+let bookIndex = -1;
+
 console.log(myLibrary);
 
 function Book(title, author, pages, status) {
@@ -42,6 +45,7 @@ function addBookToLibrary(newBook) {
 }
 
 addBookBtn.addEventListener("click", () => {
+  clearValues();
   modal.showModal();
 });
 
@@ -157,6 +161,12 @@ const clearValues = () => {
   showorHideCustomRadioButton(true, true);
 };
 
+// closeButton.addEventListener("click", () => clearValues());
+closeButton.addEventListener("click", () => {
+  clearValues();
+  bookIndex = -1;
+  modal.close();
+});
 submitButton.addEventListener("click", (event) => {
   event.preventDefault();
   const selectedRadioButton = document.querySelector(
@@ -171,7 +181,7 @@ submitButton.addEventListener("click", (event) => {
       (selectedRadioButton.value === "customValue" &&
         userInputPageReadValidation()))
   ) {
-    const newBook = new Book(
+    const book = new Book(
       titleInput.value,
       authorInput.value,
       pagesInput.value,
@@ -180,9 +190,22 @@ submitButton.addEventListener("click", (event) => {
         : selectedRadioButton.value
     );
 
-    addBookToLibrary(newBook);
-    modal.close(newBook);
-    addBookToGridLayout(newBook, myLibrary.length - 1);
+    if (bookIndex === -1) {
+      // add new book
+      addBookToLibrary(book);
+      addBookToGridLayout(book, myLibrary.length - 1);
+    } else if (bookIndex > -1) {
+      // update book
+      myLibrary[bookIndex].title = book.title;
+      myLibrary[bookIndex].author = book.author;
+      myLibrary[bookIndex].pages = book.pages;
+      myLibrary[bookIndex].status = book.status;
+      updateGrid(book, bookIndex);
+
+      bookIndex = -1;
+    }
+
+    modal.close();
     clearValues();
   } else {
     console.log("ERROR");
@@ -320,7 +343,7 @@ const addBookToGridLayout = (book, index) => {
   bookTitleLabel.appendChild(bookTitleResult);
 
   const AuthorNameLabel = addNewElement("div", "AuthorName-label");
-  AuthorNameLabel.textContent = "Book Title: ";
+  AuthorNameLabel.textContent = "Author Name: ";
   bookInfoContainer.appendChild(AuthorNameLabel);
   const AuthorNameResult = addNewElement("span", "AuthorName-result");
   AuthorNameResult.textContent = book.author;
@@ -345,6 +368,7 @@ const addBookToGridLayout = (book, index) => {
   editIcon.src = "https://img.icons8.com/ios/50/000000/create-new.png";
   editIcon.alt = "Edit Icon";
   editButton.appendChild(editIcon);
+  editButton.addEventListener("click", () => clickEditBtn(editButton));
 
   const deleteButton = addNewElement("button", "delete-btn");
   buttonLayout.appendChild(deleteButton);
@@ -371,4 +395,67 @@ const removeGrids = () => {
   while (viewBookContainer.hasChildNodes()) {
     viewBookContainer.removeChild(viewBookContainer.firstChild);
   }
+};
+
+const clickEditBtn = (editButton) => {
+  const parentNode = editButton.parentNode;
+  const indexToEdit = Number(parentNode.getAttribute("data-book-Index")); // index of item to edit
+  console.log(indexToEdit);
+  console.log(Number(indexToEdit));
+  bookIndex = indexToEdit;
+  // clearValues();
+  //populate the data based on the index
+  titleInput.value = myLibrary[indexToEdit].title;
+  authorInput.value = myLibrary[indexToEdit].author;
+  pagesInput.value = myLibrary[indexToEdit].pages;
+
+  showorHideCustomRadioButton(false, true);
+
+  const selectedRadioButton = !Number.isNaN(
+    Number(myLibrary[indexToEdit].status)
+  )
+    ? "customValue"
+    : myLibrary[indexToEdit].status;
+
+  myLibrary[indexToEdit].status;
+
+  // Select the radio button based on the status
+  radioButtons.forEach((radioButton) => {
+    if (radioButton.value === selectedRadioButton) {
+      radioButton.checked = true;
+      if (radioButton.value === "customValue") {
+        customValueInput.value = myLibrary[indexToEdit].status;
+      }
+    }
+  });
+  modal.showModal();
+};
+
+const updateGrid = (book, bookIndex) => {
+  const grid = document.querySelectorAll(".grid")[bookIndex];
+
+  // get the status layout and then removing the canvas
+  const statusLayout = grid.childNodes[0].childNodes[0].childNodes[1];
+  statusLayout.removeChild(
+    grid.childNodes[0].childNodes[0].childNodes[1].childNodes[0]
+  );
+
+  // circular-progress bar
+  const progressBar = document.createElement("canvas");
+  progressBar.width = statusLayout.clientWidth;
+  progressBar.height = statusLayout.clientHeight;
+  statusLayout.appendChild(progressBar);
+  updateProgressBar(
+    progressBar,
+    Number(book.status) / Number(book.pages),
+    book
+  );
+
+  // now update the fields
+  grid.childNodes[0].childNodes[1].childNodes[0].childNodes[1].textContent =
+    book.title;
+  grid.childNodes[0].childNodes[1].childNodes[1].childNodes[1].textContent =
+    book.author;
+  grid.childNodes[0].childNodes[1].childNodes[2].childNodes[1].textContent =
+    book.pages;
 };
