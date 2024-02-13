@@ -1,6 +1,6 @@
 # Library Management System
 
-<img src="image.png" alt="Alt text" width="800" height="450">
+<img src="image.png" alt="Alt text" width="800" height="350">
 
 ## Introduction
 
