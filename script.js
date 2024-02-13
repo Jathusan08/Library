@@ -217,15 +217,14 @@ const getStatusColor = (book) => {
   let statusColor;
 
   if (book.status === "unread") {
-    statusColor = "#ff0000";
+    return "#ff0000";
   } else if (book.status === "reading") {
-    statusColor = "#ffbf00";
+    return "#ffbf00";
   } else if (book.status === "completed") {
-    statusColor = "#4caf50";
+    return "#4caf50";
   } else {
-    statusColor = "#ffffff";
+    return "#ffffff";
   }
-  return statusColor;
 };
 
 const getPercentageColor = (book) => {
@@ -234,21 +233,20 @@ const getPercentageColor = (book) => {
     const percentageRead = (Number(book.status) / Number(book.pages)) * 100;
 
     if (percentageRead === 100) {
-      color = "#4caf50";
+      return "#4caf50";
     } else if (percentageRead >= 80 && percentageRead <= 99) {
-      color = "#5db761";
+      return "#5db761";
     } else if (percentageRead >= 70 && percentageRead <= 79) {
-      color = "#ffbf00";
+      return "#ffbf00";
     } else if (percentageRead >= 50 && percentageRead <= 69) {
-      color = "#ffc519";
+      return "#ffc519";
     } else if (percentageRead >= 25 && percentageRead <= 49) {
-      color = "#ff3232";
+      return "#ff3232";
     } else if (percentageRead >= 6 && percentageRead <= 24) {
-      color = "#ff1919";
+      return "#ff1919";
     } else if (percentageRead >= 0 && percentageRead <= 5) {
-      color = "#ff0000";
+      return "#ff0000";
     }
-    return color;
   }
 };
 
