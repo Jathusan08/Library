@@ -68,6 +68,11 @@ h1 {
   background-color: #00b7dd;
   color: #f4fbfd;
 }
+
+.button-section > .add-book-btn:hover {
+  background-color: #32c5e3;
+}
+
 dialog {
   margin: 10% auto;
   width: 80%;
@@ -149,6 +154,10 @@ fieldset {
   height: 25px;
 }
 
+.buttons-form > .submit-button:hover {
+  background-color: #cba042;
+}
+
 .buttons-form > .cancel-button {
   color: #dcdcdc;
   font-weight: bolder;
@@ -158,6 +167,11 @@ fieldset {
   border: none;
   border-color: #fec853;
 }
+
+.buttons-form > .cancel-button:hover {
+  background-color: #2f2f2f;
+}
+
 .main-section {
   width: 100%;
   height: auto;
@@ -169,6 +183,7 @@ fieldset {
   display: grid;
 
   grid-template-columns: 455px 455px 455px;
+  /* grid-template-columns: repeat(auto-fill, minmax(459px, 1fr)); */
 
   gap: 20px;
 }
@@ -250,6 +265,10 @@ fieldset {
   background-color: #ffde07;
 }
 
+.edit-btn:hover {
+  background-color: #ffe751;
+}
+
 .editIcon-img,
 .deleteIcon-img {
   width: 28px;
@@ -260,6 +279,10 @@ fieldset {
 
 .delete-btn {
   background-color: #ff0000;
+}
+
+.delete-btn:hover {
+  background-color: #ff4c4c;
 }
 
 footer h3,
